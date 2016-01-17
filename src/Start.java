@@ -1,4 +1,5 @@
 import Compress.Compress;
+import Decompress.Decompress;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,7 +13,8 @@ import java.io.IOException;
 public class Start {
 
     public Start() {
-
+        Integer i=Integer.MAX_VALUE;
+        System.out.println(i.toBinaryString(i));
         int choice = Integer.parseInt(JOptionPane.showInputDialog(null, "1- Komprimera Bild\n2- Expandera bild"));
         JFileChooser jc = new JFileChooser();
         jc.showDialog(null, "Välj");
@@ -30,7 +32,7 @@ public class Start {
                 }
                 break;
             case 2: //Decompress
-
+                new Decompress(jc.getSelectedFile());
                 break;
 
         }

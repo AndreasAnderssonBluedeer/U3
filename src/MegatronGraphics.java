@@ -19,14 +19,20 @@ public class MegatronGraphics {
         out.write(magic);
         write4bytes(width, out);
         write4bytes(height, out);
+        int max=pxl[0];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 imgr.getPixel(i, j, pxl);
                 out.write(pxl[0]);
                 out.write(pxl[1]);
                 out.write(pxl[2]);
+                max=Math.max(pxl[0],max);
+                max=Math.max(pxl[1],max);
+                max=Math.max(pxl[2],max);
             }
         }
+        Integer i=max;
+        System.out.println(i.toBinaryString(i));
         out.close();
     }
     
