@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -111,10 +112,10 @@ public class MegatronGraphics {
                 break;
         }*/
 
-        System.out.println(String.format("%8s", Integer.toBinaryString(8>>>3*8 & 255)).replace(' ', '0'));
+      /*  System.out.println(String.format("%8s", Integer.toBinaryString(8>>>3*8 & 255)).replace(' ', '0'));
         System.out.println(String.format("%8s", Integer.toBinaryString(8>>>2*8 & 255)).replace(' ', '0'));
         System.out.println(String.format("%8s", Integer.toBinaryString(51>>>1*8 & 63)).replace(' ', '0'));
-        System.out.println(String.format("%8s", Integer.toBinaryString(51       & 255)));
+        System.out.println(String.format("%8s", Integer.toBinaryString(51       & 255)));*/
     }
 }
 
