@@ -91,7 +91,7 @@ public class MegatronGraphics {
     }
    
     public static void main(String[] args) throws IOException {
-        int choice=Integer.parseInt(JOptionPane.showInputDialog(null,"1- Skapa MTG från Bild\n2- Skapa PNG från MTG"));
+   /*     int choice=Integer.parseInt(JOptionPane.showInputDialog(null,"1- Skapa MTG från Bild\n2- Skapa PNG från MTG"));
         JFileChooser jc=new JFileChooser();
         jc.showDialog(null,"Välj");
         //Edit filename.
@@ -109,7 +109,12 @@ public class MegatronGraphics {
                 filename+=".png";
                 ImageIO.write(img2, "PNG", new File(filename));
                 break;
-        }
+        }*/
+
+        System.out.println(String.format("%8s", Integer.toBinaryString(8>>>3*8 & 255)).replace(' ', '0'));
+        System.out.println(String.format("%8s", Integer.toBinaryString(8>>>2*8 & 255)).replace(' ', '0'));
+        System.out.println(String.format("%8s", Integer.toBinaryString(51>>>1*8 & 63)).replace(' ', '0'));
+        System.out.println(String.format("%8s", Integer.toBinaryString(51       & 255)));
     }
 }
 
