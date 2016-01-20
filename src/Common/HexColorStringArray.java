@@ -1,21 +1,14 @@
-package Compress;
-
-import java.awt.*;
+package Common;
 
 /**
  * Created by Andreas on 2016-01-19.
  */
-public class ColorPalette {
+public class HexColorStringArray {
 
-    String[] hexColors=new String[256];
-    RGB[] rgbColors=new RGB[256];
-
-    public ColorPalette(){
-        initHexColors();
-    }
-    public void initHexColors(){
+    public String[] getArray(){
+        String [] hexColors=new String[256];
         int i=0;
-       //0-10
+        //0-10
         hexColors[i++]="#000000";
         hexColors[i++]="#800000";
         hexColors[i++]="#008000";
@@ -24,7 +17,7 @@ public class ColorPalette {
         hexColors[i++]="#800080";
         hexColors[i++]="#008080";
         hexColors[i++]="#c0c0c0";
-        hexColors[i++]=" #808080";
+        hexColors[i++]="#808080";
         hexColors[i++]="#ff0000";
         hexColors[i++]="#00ff00";
         //11-20
@@ -60,7 +53,6 @@ public class ColorPalette {
         hexColors[i++]="#00afd7";
         hexColors[i++]="#00afff";
         hexColors[i++]="#00d700";
-
         //41-50
         hexColors[i++]="#00d75f";
         hexColors[i++]="#00d787";
@@ -299,14 +291,7 @@ public class ColorPalette {
         hexColors[i++]="#e4e4e4";
         hexColors[i++]="#eeeeee";
 
+
+        return hexColors;
     }
-    public static void main(String [] args){
-        new ColorPalette();
-        System.out.println(Color.decode("#FFCCEE"));
-    }
-    /*
-
-
-
-     */
 }
