@@ -90,7 +90,7 @@ public class Hashtable {
 			//System.out.println("*Put* genomförd." + key + ", " + value + " är Tillagt");
 
 		} else {
-			System.out.println("*Put* kunde inte utföras.");
+			//System.out.println("*Put* kunde inte utföras.");
 		}
 	}
 	

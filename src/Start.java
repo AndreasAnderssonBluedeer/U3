@@ -26,7 +26,7 @@ public class Start {
             case 1: //Compress
                 try {
                     BufferedImage img=ImageIO.read(jc.getSelectedFile());
-                    new Compress(img);
+                    new Compress(img,jc.getSelectedFile().getPath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

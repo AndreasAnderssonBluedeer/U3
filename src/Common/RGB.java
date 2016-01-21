@@ -5,11 +5,11 @@ package Common;
  */
 public class RGB implements Comparable{
 
-    private int red,green,blue,iterations;
+    private int red,green,blue,nbrOfPixels;
 
 
-    public void setIterations(int iterations){
-        this.iterations=iterations;
+    public void addNbrofPixels(){
+        this.nbrOfPixels++;
     }
     public void setRed(int red){
         this.red=red;
@@ -53,8 +53,8 @@ public class RGB implements Comparable{
         }
         return str;
     }
-    public int getIterations(){
-        return iterations;
+    public int getNbrOfPixels(){
+        return nbrOfPixels;
     }
 
     @Override
