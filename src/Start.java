@@ -18,9 +18,6 @@ public class Start {
         int choice = Integer.parseInt(JOptionPane.showInputDialog(null, "1- Komprimera Bild\n2- Expandera bild"));
         JFileChooser jc = new JFileChooser();
         jc.showDialog(null, "Välj");
-        //Edit filename.
-        String filename = jc.getSelectedFile().getPath();
-        filename = filename.substring(0, filename.length() - 4);
 
         switch (choice) {
             case 1: //Compress

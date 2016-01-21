@@ -1,5 +1,6 @@
 package Decompress;
 
+import Common.BinaryConverter;
 import Common.ColorPalette;
 import Common.RGB;
 
@@ -23,8 +24,8 @@ public class Decompress {
 
     public Decompress(File file){
         filename=file.getPath()+".png";
-       // colorPalette=new ColorPalette().getRGBArray();
-        colorPalette=new RGB[256];
+        colorPalette=new ColorPalette().getRGBArray();
+        BinaryConverter bc=new BinaryConverter();
 
     //First read 2x 32 bits = 2x 4 bytes for width/Height.
         try {
@@ -37,29 +38,22 @@ public class Decompress {
             img=new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
             raster=img.getRaster();
             System.out.println("W:"+width+" H:"+height);
-            //Read Palette (size=256)
-            System.out.println("Reading Color palette");
-            for (int i=0;i<256;i++){
-                int palette=dis.readUnsignedByte();
-                int colorValue=dis.readInt();
-                //Create new RGB
-                colorPalette[palette]=new RGB();
-                //Split color value int to RGB values.
-                String str=String.valueOf(colorValue);
-                colorPalette[palette].setRed(Integer.parseInt(str.substring(1,4)));
-                colorPalette[palette].setGreen(Integer.parseInt(str.substring(4, 7)));
-                colorPalette[palette].setBlue(Integer.parseInt(str.substring(7, 10)));
-
-            }
 
         //Read pixel values
             System.out.println("Reading pixel values");
         int length=height*width;
+
+
             //Add all pixel values from the file.
             for (int i=0;i<length;i++){
                 //Range -128->127
-                int value=dis.readUnsignedByte();
-                readArray.add(value);
+                int value0=dis.readUnsignedByte();
+                int value1=dis.readUnsignedByte();
+                int value2=dis.readUnsignedByte();
+
+                int[] x=bc.toInt(value2,value0,Integer.toBinaryString(value1));
+                readArray.add(x[1]);
+                readArray.add(x[0]);
 
             }
 
@@ -68,6 +62,7 @@ public class Decompress {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Read:"+readArray.get(0));
         printPalette();
         initRaster();
         saveFile();
@@ -83,6 +78,7 @@ public class Decompress {
         int i=0;
         for (int row=0;row<height;row++){
             for (int col=0;col<width;col++){
+
                 RGB temp=colorPalette[readArray.get(i++)];
                 raster.setSample(col,row,0,temp.getRed());
                 raster.setSample(col,row,1,temp.getGreen());

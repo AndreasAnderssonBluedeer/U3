@@ -5,12 +5,8 @@ package Common;
  */
 public class RGB implements Comparable{
 
-    private int red,green,blue,nbrOfPixels;
+    private int red,green,blue;
 
-
-    public void addNbrofPixels(){
-        this.nbrOfPixels++;
-    }
     public void setRed(int red){
         this.red=red;
     }
@@ -52,9 +48,6 @@ public class RGB implements Comparable{
             str="00"+x;
         }
         return str;
-    }
-    public int getNbrOfPixels(){
-        return nbrOfPixels;
     }
 
     @Override
