@@ -23,13 +23,6 @@ public class Compress {
 
     private int[] colorToPrint; //Colors ready to print/save.
 
-    //Hashtables for every color.
-    private Hashtable redMap=new Hashtable(3375);
-    private Hashtable greenMap=new Hashtable(3375);
-    private Hashtable blueMap=new Hashtable(3375);
-
-
-
     private int printPos=0;
     private String filepath;
 
@@ -59,44 +52,10 @@ public class Compress {
 
         //Program Sequence
         initColorArray();
-        initHashMaps();
         prepareForPrint();
         saveCompressedFile();
     }
 
-    /**
-     * Initializes Hashtables. one for each color with values to colors with same RGB values.
-     * Used to find a close Palette match later.
-     */
-    private void initHashMaps(){
-        System.out.println("Init Hashmaps");
-        //Loop through all colors
-        for (int i=0;i< customPalette.length;i++){
-            //Loop through to find all with the same Color values.
-            ArrayList<RGB> red=new ArrayList<>();
-            ArrayList<RGB> green=new ArrayList<>();
-            ArrayList<RGB> blue=new ArrayList<>();
-            System.out.println(customPalette[i].getRed()+","+ customPalette[i].getGreen()+","+ customPalette[i].getBlue());
-        for (int k=0;k< customPalette.length;k++) {
-            //If current position = color value-> add to rgb list.
-            // (All colors with value x for r,g or b will be connected to a list of rgb object.
-
-            if(i== customPalette[k].getRed()){
-                red.add(customPalette[k]);
-            }
-            if(i== customPalette[k].getGreen()){
-                green.add(customPalette[k]);
-            }
-            if(i== customPalette[k].getBlue()){
-                blue.add(customPalette[k]);
-            }
-
-        }
-            redMap.put(i,red);
-            greenMap.put(i,green);
-            blueMap.put(i,blue);
-        }
-    }
 
     /**
      * Creates an RGB object for each pixel in the picture.
