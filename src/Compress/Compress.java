@@ -12,18 +12,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Created by Andreas on 2016-01-15.
+ * Computes the compression of an image file such as PNG etc. Saves the new file as "example".bimz
+ * Created by Andreas Andersson & David Isberg on 2016-01-15.
  */
 public class Compress {
 
-    private WritableRaster inputRaster;
-    private RGB[][] colorArray;
-    private RGB[] customPalette;
+    private WritableRaster inputRaster; //Raster
+    private RGB[][] colorArray; //Pixel array from image.
+    private RGB[] customPalette;    //Color palette
 
-    private int[] colorToPrint;
-    //Hasha till RGB med Nyckel av Röd resp. Grön och Blå. Var position innehåller de RGB objekten som innehåller samma
-    //Föregående Map nyckel.
-    private Hashtable redMap=new Hashtable(3375);   //Antal färger
+    private int[] colorToPrint; //Colors ready to print/save.
+
+    //Hashtables for every color.
+    private Hashtable redMap=new Hashtable(3375);
     private Hashtable greenMap=new Hashtable(3375);
     private Hashtable blueMap=new Hashtable(3375);
 
@@ -32,30 +33,41 @@ public class Compress {
     private int printPos=0;
     private String filepath;
 
+    /**
+     * Test constructor
+     */
     public Compress(){
 
     }
+
+    /**
+     * Constructor, Receives an image and String with filepath to save the new file.
+     * @param img -image
+     * @param filepath -filepath
+     */
     public Compress(BufferedImage img,String filepath){
         inputRaster=img.getRaster();
         this.filepath=filepath;
 
+        //Create Arrays.
         colorArray=new RGB[inputRaster.getHeight()][inputRaster.getWidth()];
         int size=inputRaster.getHeight()*inputRaster.getWidth();
         customPalette=new ColorPalette().getRGBArray();
-
         colorToPrint=new int[size];
+
         System.out.println("Height:"+inputRaster.getHeight()+" Width:"+inputRaster.getWidth());
 
+        //Program Sequence
         initColorArray();
         initHashMaps();
         prepareForPrint();
         saveCompressedFile();
     }
 
-
-
-
-
+    /**
+     * Initializes Hashtables. one for each color with values to colors with same RGB values.
+     * Used to find a close Palette match later.
+     */
     private void initHashMaps(){
         System.out.println("Init Hashmaps");
         //Loop through all colors
@@ -86,7 +98,10 @@ public class Compress {
         }
     }
 
-    //Construct an array with RGB for each pixel.
+    /**
+     * Creates an RGB object for each pixel in the picture.
+     * Initializes ColorArray.
+     */
     private void initColorArray(){
         System.out.println("Init color array");
         for (int row=0;row<colorArray.length;row++){
@@ -100,8 +115,11 @@ public class Compress {
 
             }
         }
-
     }
+
+    /**
+     * Loops through all pixels to find closest Palette color with addPixel();
+     */
     private void prepareForPrint(){
         System.out.println("Prepare for print");
         for ( int row=0;row<colorArray.length;row++){
@@ -113,14 +131,21 @@ public class Compress {
         }
         System.out.println(printPos);
     }
+
+    /**
+     * Receives an pixel color and adds the closest to ColorsToPrint.
+     * ColorsToPrint is the array with all pixels/color values to be saved.
+     * @param pixel color to find
+     */
     private void addPixel(RGB pixel){
-        //Loopa igenom färglistorna tills en färg hittas
+            //get values
             int red=pixel.getRed();
             int green=pixel.getGreen();
             int blue=pixel.getBlue();
-
+            //BestPixel = index, Bestresult= min Difference.
             int bestPixel=0,bestResult=Integer.MAX_VALUE;
 
+        //Loop thorugh the palette to find the color with the smallest difference.
         for (int i=0;i< customPalette.length;i++){
             int res;
             int r,g,b;
@@ -136,12 +161,18 @@ public class Compress {
             }
 
         }
+        //Add color to "Print"
         colorToPrint[printPos++]=bestPixel;
 
     }
+
+    /**
+     * Writes ColorsToPrint to file and executes the compression.
+     */
     private void saveCompressedFile(){
         BinaryConverter bc=new BinaryConverter();
         System.out.println("Saving File");
+        //Choose filename.
         String filename= JOptionPane.showInputDialog(null,"Skriv in önskat filnamn.");
         try {
             DataOutputStream dos = new DataOutputStream(new FileOutputStream(filepath+filename+".bimz"));
@@ -149,7 +180,7 @@ public class Compress {
             dos.writeInt(colorArray[0].length);    //Write Width as int    32bits.
             dos.writeInt(colorArray.length);       //Write Height as int   32bits.
 
-            //Slutligen-> skriv pixlarnas värden kopplat till palette positionerna.
+            //Write color values, 2 pixels at a time, 1 byte/pixel +1 shared byte for high values.
             for (int i=1;i<colorToPrint.length;i+=2){
               int[] arr=  bc.toByte(colorToPrint[i-1],colorToPrint[i]);
                 dos.writeByte(arr[0]);  //pixel 1
@@ -165,6 +196,11 @@ public class Compress {
         }
         System.out.println("File saved- Compression Complete");
     }
+
+    /**
+     * Main method for testing.
+     * @param args
+     */
     public static void main(String [] args){
         new Compress();
     }

@@ -4,15 +4,23 @@ import java.awt.*;
 import java.util.Arrays;
 
 /**
- * Created by Andreas on 2016-01-19.
+ * Creates a Color Palette with 3375 colors. (256/16)*3 colors values.
+ * Created by Andreas Andersson & David Isberg on 2016-01-19.
  */
 public class ColorPalette {
 
     RGB[] rgbColors;
 
+    /**
+     * Constructor
+     */
     public ColorPalette(){
         initPalette();
     }
+
+    /**
+     * Initializes the Palette.
+     */
     private void initPalette(){
         rgbColors =new RGB[3375];
         int pos=0;
@@ -32,11 +40,18 @@ public class ColorPalette {
         }
     }
 
+    /**
+     * Returns Palette.
+     * @return RGB[]
+     */
     public RGB[] getRGBArray(){
         return rgbColors;
     }
 
-
+    /**
+     * Main method for testing.
+     * @param args
+     */
     public static void main(String [] args){
         new ColorPalette();
     }

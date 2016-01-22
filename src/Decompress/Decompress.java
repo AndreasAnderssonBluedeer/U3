@@ -11,6 +11,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
+ * Decompression class. Reads two ints for width and height, then 3 bytes for 2 color values.
+ * FILE FORMAT ".BIMZ"
  * Created by Andreas on 2016-01-15.
  */
 public class Decompress {
@@ -22,6 +24,10 @@ public class Decompress {
     private String filename;
     private BufferedImage img;
 
+    /**
+     * Constructor that recieves an file to decompress.
+     * @param file
+     */
     public Decompress(File file){
         filename=file.getPath()+".png";
         colorPalette=new ColorPalette().getRGBArray();
@@ -42,7 +48,6 @@ public class Decompress {
         //Read pixel values
             System.out.println("Reading pixel values");
         int length=height*width;
-
 
             //Add all pixel values from the file.
             for (int i=0;i<length;i++){
@@ -67,12 +72,20 @@ public class Decompress {
         initRaster();
         saveFile();
     }
+
+    /**
+     * Prints the ColorPalette.
+     */
     private void printPalette(){
         for (int i=0;i<colorPalette.length;i++){
             System.out.println("I:"+i+"    "+colorPalette[i].getRed()+","+
                     colorPalette[i].getGreen()+","+colorPalette[i].getBlue());
         }
     }
+
+    /**
+     * Initializes the Image Raster.
+     */
     private void initRaster(){
         System.out.println("Init Raster");
         int i=0;
@@ -86,6 +99,10 @@ public class Decompress {
             }
         }
     }
+
+    /**
+     * Save the file to the same directory as input file.
+     */
     private void saveFile(){
         try {
             ImageIO.write(img, "PNG", new File(filename));

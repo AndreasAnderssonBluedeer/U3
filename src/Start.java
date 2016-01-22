@@ -8,10 +8,14 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Andreas on 2016-01-15.
+ * Main class to start the Compress/Decompress program for FILE FORMAT ".BIMZ"
+ * Created by Andreas Andersson & David Isberg on 2016-01-15.
  */
 public class Start {
 
+    /**
+     * Constructor, starts the program. Show function with JOptionPane.
+     */
     public Start() {
         Integer i=Integer.MAX_VALUE;
         System.out.println(i.toBinaryString(i));
@@ -34,6 +38,11 @@ public class Start {
 
         }
     }
+
+    /**
+     * Main method.
+     * @param args
+     */
     public static void main(String [] args){
         new Start();
     }
